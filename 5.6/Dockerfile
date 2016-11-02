@@ -96,6 +96,7 @@ RUN a2enmod		\
   env 			\
   expires 		\
   filter 		\
+  headers 		\
   mime 			\
   negotiation 		\
   php5	 		\
