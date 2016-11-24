@@ -65,6 +65,7 @@ RUN apt-get -yqq install \
   php7.0-zip		\
   php7.0-apcu		\
   php7.0-memcached 	\
+  php7.0-redis 	\
   php7.0-xdebug		\
   libapache2-mod-php7.0
 
