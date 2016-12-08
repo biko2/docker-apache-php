@@ -56,6 +56,7 @@ RUN apt-get -yqq install \
   php5-memcached 	\
   php5-xdebug		\
   php5-xhprof		\
+  php5-redis		\
   libapache2-mod-php5
 
 # Install SMTP.
