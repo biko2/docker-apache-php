@@ -9,6 +9,7 @@ MAINTAINER keopx <keopx@keopx.net>
 # Set frontend. We'll clean this later on!
 ENV DEBIAN_FRONTEND noninteractive
 
+# Locale
 ENV LOCALE es_ES.UTF-8
 
 # Set repositories
@@ -37,7 +38,15 @@ RUN apt-get -yqq install \
   openssh-client \
   git \
   bash-completion \
-  libssh2-php
+  libssh2-php \
+  locales
+
+# Install locale
+RUN \
+  sed -i -e "s/# $LOCALE/$LOCALE/" /etc/locale.gen && \
+  echo "LANG=$LOCALE">/etc/default/locale && \
+  dpkg-reconfigure --frontend=noninteractive locales && \
+  update-locale LANG=$LOCALE
 
 # Configure Dotdeb sources
 RUN \
@@ -67,6 +76,14 @@ RUN apt-get -yqq install \
   php7.0-redis		\
   php7.0-xdebug		\
   libapache2-mod-php7.0
+
+# PHP Timezone
+ENV TZ=Europe/Madrid
+RUN \
+  echo $TZ | tee /etc/timezone && \
+  dpkg-reconfigure --frontend noninteractive tzdata && \
+  echo "date.timezone = \"$TZ\";" > /etc/php/7.0/apache2/conf.d/timezone.ini && \
+  echo "date.timezone = \"$TZ\";" > /etc/php/7.0/cli/conf.d/timezone.ini
 
 # Install manually xhprof
 RUN \
@@ -128,6 +145,14 @@ RUN a2enmod		\
 # Install composer (latest version)
 RUN curl -sS https://getcomposer.org/installer | php && \
   mv composer.phar /usr/local/bin/composer
+
+# alias to disable xdebug when running composer command
+# https://getcomposer.org/doc/articles/troubleshooting.md#xdebug-impact-on-composer
+RUN mkdir -p /usr/local/etc/php/conf.d.disabled/
+RUN echo 'function composer() { COMPOSER="$(which composer)" || { echo "Could not find composer in path" >&2 ; return 1 ; } && sudo mv /usr/local/etc/php/conf.d/xdebug.ini /usr/local/etc/php/conf.d.disabled/ ; $COMPOSER "$@" ; STATUS=$? ; sudo mv /usr/local/etc/php/conf.d.disabled/xdebug.ini /usr/local/etc/php/conf.d/ ; return $STATUS ; }' >> /etc/bash.bashrc
+
+# prestissimo to speed up composer
+RUN composer global require "hirak/prestissimo:^0.3"
 
 ### Install DRUSH (latest stable) ###
 # Run this in your terminal to get the latest DRUSH project version:
