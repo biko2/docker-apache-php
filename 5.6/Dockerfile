@@ -69,10 +69,6 @@ RUN apt-get -yqq install apache2-mpm-prefork
 # Step 2: Configuration
 #
 
-# Output Apache logs to stdout
-RUN ln -sf /dev/stdout /var/log/apache2/access.log
-RUN ln -sf /dev/stderr /var/log/apache2/error.log
-
 # Disable by default xdebug. Use docker-compose to add file.
 RUN php5dismod xdebug
 
