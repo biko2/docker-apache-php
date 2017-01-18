@@ -30,7 +30,7 @@ RUN apt-get -yqq install \
   mysql-client \
   locales \
   curl \
-  wget \  
+  wget \
   unzip \
   patch \
   rsync \
@@ -119,7 +119,7 @@ RUN a2enmod		\
   setenvif 		\
   status 		\
   && a2dismod cgi
-  
+
 # Install composer (latest version)
 RUN curl -sS https://getcomposer.org/installer | php && \
   mv composer.phar /usr/local/bin/composer
@@ -141,12 +141,16 @@ RUN mkdir --parents /opt/drush-7.x && cd /opt/drush-7.x && \
   composer config bin-dir /usr/local/bin && \
   # Install Drush.
   composer install && \
-  # Drush vitamin. 
+  # Drush vitamin.
   # See: https://www.drupal.org/project/registry_rebuild.
   drush dl registry_rebuild && \
   # See: https://www.drupal.org/project/updatepath.
   drush dl --destination=$HOME/.drush updatepath -y && drush cache-clear drush
 
+### Instal drush CMI tools
+RUN cd ~/.drush && \
+  wget https://raw.githubusercontent.com/previousnext/drush_cmi_tools/8.x-1.x/drush_cmi_tools.drush.inc && \
+  drush cc drush
 
 # Bash setup.
 RUN echo ". /usr/share/bash-completion/bash_completion" >> ~/.bashrc && \

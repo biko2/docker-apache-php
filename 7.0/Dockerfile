@@ -30,7 +30,7 @@ RUN apt-get -yqq install \
   mysql-client \
   locales \
   curl \
-  wget \  
+  wget \
   unzip \
   patch \
   rsync \
@@ -141,7 +141,7 @@ RUN a2enmod		\
   setenvif 		\
   status 		\
   && a2dismod cgi
-  
+
 # Install composer (latest version)
 RUN curl -sS https://getcomposer.org/installer | php && \
   mv composer.phar /usr/local/bin/composer
@@ -163,6 +163,11 @@ RUN curl http://files.drush.org/drush.phar -L -o drush.phar && \
   chmod +x /usr/local/bin/drush && \
   # Copy configuration files to user home directory:
   drush init -y
+
+### Instal drush CMI tools
+RUN cd ~/.drush && \
+  wget https://raw.githubusercontent.com/previousnext/drush_cmi_tools/8.x-1.x/drush_cmi_tools.drush.inc && \
+  drush cc drush
 
 ### Install DRUPAL CONSOLE (latest version) ###
 # Run this in your terminal to get the latest project version:
