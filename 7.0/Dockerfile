@@ -1,6 +1,6 @@
 FROM debian:jessie
 
-MAINTAINER keopx <keopx@keopx.net>
+MAINTAINER juanjo <juanjo.lopez@gmail.com>
 
 #
 # Step 1: Installation
@@ -163,11 +163,6 @@ RUN curl http://files.drush.org/drush.phar -L -o drush.phar && \
   chmod +x /usr/local/bin/drush && \
   # Copy configuration files to user home directory:
   drush init -y
-
-### Instal drush CMI tools
-RUN cd ~/.drush && \
-  wget https://raw.githubusercontent.com/previousnext/drush_cmi_tools/8.x-1.x/drush_cmi_tools.drush.inc && \
-  drush cc drush
 
 ### Install DRUPAL CONSOLE (latest version) ###
 # Run this in your terminal to get the latest project version:

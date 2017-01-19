@@ -1,6 +1,6 @@
 FROM debian:jessie
 
-MAINTAINER keopx <keopx@keopx.net>
+MAINTAINER juanjo <juanjo.lopez@gmail.com>
 
 #
 # Step 1: Installation
@@ -146,11 +146,6 @@ RUN mkdir --parents /opt/drush-7.x && cd /opt/drush-7.x && \
   drush dl registry_rebuild && \
   # See: https://www.drupal.org/project/updatepath.
   drush dl --destination=$HOME/.drush updatepath -y && drush cache-clear drush
-
-### Instal drush CMI tools
-RUN cd ~/.drush && \
-  wget https://raw.githubusercontent.com/previousnext/drush_cmi_tools/8.x-1.x/drush_cmi_tools.drush.inc && \
-  drush cc drush
 
 # Bash setup.
 RUN echo ". /usr/share/bash-completion/bash_completion" >> ~/.bashrc && \
