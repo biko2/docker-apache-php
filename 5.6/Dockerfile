@@ -86,8 +86,8 @@ RUN apt-get -yqq install apache2-mpm-prefork
 # Step 2: Configuration
 #
 
-# Disable by default xdebug. Use docker-compose to add file.
-RUN php5dismod xdebug
+# Disable by default xdebug and xhprof. Use docker-compose.yml to add file.
+RUN php5dismod xdebug xhprof
 
 # Remove all sites enabled
 RUN rm /etc/apache2/sites-enabled/*
@@ -164,6 +164,9 @@ RUN apt-get -q autoclean && \
 #
 # Step 4: Run
 #
+
+# Create 'me' user like local machime user.
+RUN useradd me && usermod -G www-data -a me
 
 # Working dir
 WORKDIR /var/www
