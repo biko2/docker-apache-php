@@ -198,9 +198,6 @@ WORKDIR /var/www
 # Volume for Apache2 data
 VOLUME /var/www
 
-# Special permissions.
-RUN usermod -u 1000 www-data && usermod -a -G users www-data
-
 COPY scripts/apache2-foreground /usr/bin/
 
 EXPOSE 80 443
