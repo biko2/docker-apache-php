@@ -48,7 +48,7 @@ RUN \
   dpkg-reconfigure --frontend=noninteractive locales && \
   update-locale LANG=$LOCALE
 
-# Configure Sury sources 
+# Configure Sury sources
 # @see https://www.noobunbox.net/serveur/auto-hebergement/installer-php-7-1-sous-debian-et-ubuntu
 RUN \
   apt-get -yqq install apt-transport-https lsb-release ca-certificates && \
@@ -143,6 +143,7 @@ RUN a2enmod		\
   rewrite 		\
   setenvif 		\
   status 		\
+  ssl \
   && a2dismod cgi
 
 # Install composer (latest version)
