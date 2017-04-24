@@ -54,6 +54,7 @@ RUN apt-get -yqq install \
   php5-curl 		\
   php5-dev 		\
   php5-gd 		\
+  php5-imagick \
   php5-intl 		\
   php5-json 		\
   php5-mcrypt		\

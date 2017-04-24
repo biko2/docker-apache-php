@@ -61,6 +61,7 @@ RUN apt-get -yqq install \
   php7.0-curl 		\
   php7.0-dev 		\
   php7.0-gd 		\
+  php7.0-imagick \
   php7.0-dom		\
   php7.0-intl 		\
   php7.0-json 		\
@@ -173,7 +174,9 @@ RUN curl https://drupalconsole.com/installer -L -o drupal.phar && \
   # Apply executable permissions on the downloaded file:
   chmod +x /usr/local/bin/drupal && \
   # Copy configuration files to user home directory:
-  drupal init --override
+  drupal init --override && \
+  composer require drupal/console --prefer-dist --optimize-autoloader     && \
+  composer update drupal/console --with-dependencies
 
 # Bash setup.
 RUN echo ". /usr/share/bash-completion/bash_completion" >> ~/.bashrc && echo "alias ll='ls -lahs'" >> ~/.bashrc
