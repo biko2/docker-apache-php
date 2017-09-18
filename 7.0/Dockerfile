@@ -65,6 +65,7 @@ RUN apt-get -yqq install \
   php7.0-dom		\
   php7.0-intl 		\
   php7.0-json 		\
+  php7.0-soap 		\
   php7.0-mbstring	\
   php7.0-mcrypt 	\
   php7.0-mysql		\

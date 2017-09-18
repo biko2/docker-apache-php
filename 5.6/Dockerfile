@@ -57,6 +57,7 @@ RUN apt-get -yqq install \
   php5-imagick \
   php5-intl 		\
   php5-json 		\
+  php5-soap 		\
   php5-mcrypt		\
   php5-mysql		\
   php5-twig		\
