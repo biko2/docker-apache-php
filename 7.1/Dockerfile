@@ -70,6 +70,7 @@ RUN apt-get -yqq install \
   php7.1-soap 		\
   php7.1-mbstring	\
   php7.1-mcrypt 	\
+  php7.1-bcmath     \
   php7.1-mysql		\
   php7.1-ssh2		\
   php7.1-xml		\
