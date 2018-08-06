@@ -3,7 +3,7 @@
 
 **Contiene:**
 - Apache (SSL)
-- Php 5.6/7.0/7.1 (gd, curl, opcache, memcached, redis, xdebug)
+- Php 5.6/7.0/7.1/7.2 (gd, curl, opcache, memcached, redis, xdebug)
 - Drush
 - Drush console
 - Composer
