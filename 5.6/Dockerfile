@@ -151,10 +151,10 @@ RUN composer global require "hirak/prestissimo:^0.3"
   # drush dl --destination=$HOME/.drush updatepath -y && drush cache-clear drush
 
 # Bash setup.
-RUN echo ". /usr/share/bash-completion/bash_completion" >> ~/.bashrc && \
-  echo ". /vendor/drush/drush/drush.complete.sh" >> ~/.bashrc && \
-  echo "alias ll='ls -lahs'" >> ~/.bashrc && \
-  rm /usr/local/bin/drush.bat /usr/local/bin/drush.complete.sh /usr/local/bin/drush.php
+# RUN echo ". /usr/share/bash-completion/bash_completion" >> ~/.bashrc && \
+  # echo ". /vendor/drush/drush/drush.complete.sh" >> ~/.bashrc && \
+  # echo "alias ll='ls -lahs'" >> ~/.bashrc && \
+  # rm /usr/local/bin/drush.bat /usr/local/bin/drush.complete.sh /usr/local/bin/drush.php
 
 #
 # Step 3: Clean the system
