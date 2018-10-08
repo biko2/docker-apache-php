@@ -137,18 +137,18 @@ RUN composer global require "hirak/prestissimo:^0.3"
 
 ### Install DRUSH (latest stable) ###
 # Create and/or navigate to a path for the single Composer Drush install.
-RUN mkdir --parents /opt/drush-7.x && cd /opt/drush-7.x && \
+#RUN mkdir --parents /opt/drush-7.x && cd /opt/drush-7.x && \
   # Initialise a new Composer project that requires Drush.
-  composer init --require=drush/drush:7.* -n && \
+  # composer init --require=drush/drush:7.* -n && \
   # Configure the path Composer should use for the Drush vendor binaries.
-  composer config bin-dir /usr/local/bin && \
+  # composer config bin-dir /usr/local/bin && \
   # Install Drush.
-  composer install && \
+  # composer install && \
   # Drush vitamin.
   # See: https://www.drupal.org/project/registry_rebuild.
-  drush dl registry_rebuild && \
+  # drush dl registry_rebuild && \
   # See: https://www.drupal.org/project/updatepath.
-  drush dl --destination=$HOME/.drush updatepath -y && drush cache-clear drush
+  # drush dl --destination=$HOME/.drush updatepath -y && drush cache-clear drush
 
 # Bash setup.
 RUN echo ". /usr/share/bash-completion/bash_completion" >> ~/.bashrc && \

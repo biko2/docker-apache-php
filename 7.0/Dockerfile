@@ -160,13 +160,15 @@ RUN composer global require "hirak/prestissimo:^0.3"
 
 ### Install DRUSH (latest stable) ###
 # Run this in your terminal to get the latest DRUSH project version:
-RUN curl http://files.drush.org/drush.phar -L -o drush.phar && \
+#RUN curl http://files.drush.org/drush.phar -L -o drush.phar && \
   # Accessing from anywhere on your system:
-  mv drush.phar /usr/local/bin/drush && \
+  # mv drush.phar /usr/local/bin/drush && \
   # Apply executable permissions on the downloaded file:
-  chmod +x /usr/local/bin/drush && \
+  # chmod +x /usr/local/bin/drush && \
   # Copy configuration files to user home directory:
-  drush init -y
+  # drush init -y
+# We dont need drush instead
+# RUN COMPOSER_HOME=/opt/drush COMPOSER_BIN_DIR=/usr/local/bin COMPOSER_VENDOR_DIR=/opt/drush/8 composer require drush/drush:^8
 
 ### Install DRUPAL CONSOLE (latest version) ###
 # Run this in your terminal to get the latest project version:
