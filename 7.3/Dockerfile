@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:stretch
 
 MAINTAINER juanjo <juanjo.lopez@gmail.com>
 
@@ -14,10 +14,10 @@ ENV LOCALE es_ES.UTF-8
 
 # Set repositories
 RUN \
-  echo "deb http://ftp.de.debian.org/debian/ jessie main non-free contrib\n" > /etc/apt/sources.list && \
-  echo "deb-src http://ftp.de.debian.org/debian/ jessie main non-free contrib\n" >> /etc/apt/sources.list && \
-  echo "deb http://security.debian.org/ jessie/updates main contrib non-free\n" >> /etc/apt/sources.list && \
-  echo "deb-src http://security.debian.org/ jessie/updates main contrib non-free" >> /etc/apt/sources.list && \
+  echo "deb http://ftp.de.debian.org/debian/ stretch main non-free contrib\n" > /etc/apt/sources.list && \
+  echo "deb-src http://ftp.de.debian.org/debian/ stretch main non-free contrib\n" >> /etc/apt/sources.list && \
+  echo "deb http://security.debian.org/ stretch/updates main contrib non-free\n" >> /etc/apt/sources.list && \
+  echo "deb-src http://security.debian.org/ stretch/updates main contrib non-free" >> /etc/apt/sources.list && \
   # Update repositories cache and distribution
   apt-get -qq update && apt-get -qqy upgrade
 
@@ -38,7 +38,7 @@ RUN apt-get -yqq install \
   openssh-client \
   git \
   bash-completion \
-  libssh2-php \
+  php-ssh2 \
   locales
 
 # Install locale
@@ -57,38 +57,39 @@ RUN \
   # Update repositories cache and distribution
   apt-get -qq update && apt-get -qqy upgrade
 
+
 # Install PHP7 with Xdebug (dev environment)
 RUN apt-get -yqq install \
-  php7.1 		\
-  php7.1-curl 		\
-  php7.1-dev 		\
-  php7.1-gd 		\
-  php7.1-imagick 		\
-  php7.1-dom		\
-  php7.1-intl 		\
-  php7.1-json 		\
-  php7.1-soap 		\
-  php7.1-mbstring	\
-  php7.1-mcrypt 	\
-  php7.1-bcmath     \
-  php7.1-mysql		\
-  php7.1-ssh2		\
-  php7.1-xml		\
-  php7.1-zip		\
-  php7.1-apcu		\
-  php7.1-opcache	\
-  php7.1-memcached 	\
-  php7.1-redis		\
-  php7.1-xdebug		\
-  libapache2-mod-php7.1
+  php7.3 		\
+  php7.3-curl 		\
+  php7.3-dev 		\
+  php7.3-gd 		\
+  php7.3-imagick 		\
+  php7.3-dom		\
+  php7.3-intl 		\
+  php7.3-json 		\
+  php7.3-soap 		\
+  php7.3-mbstring	\
+  php7.3-bcmath     \
+#  php7.3-mcrypt 	\
+  php7.3-mysql		\
+  php7.3-ssh2		\
+  php7.3-xml		\
+  php7.3-zip		\
+  php7.3-apcu		\
+  php7.3-opcache	\
+  php7.3-memcached 	\
+  php7.3-redis		\
+  php7.3-xdebug		\
+  libapache2-mod-php7.3
 
 # PHP Timezone
 ENV TZ=Europe/Madrid
 RUN \
   echo $TZ | tee /etc/timezone && \
   dpkg-reconfigure --frontend noninteractive tzdata && \
-  echo "date.timezone = \"$TZ\";" > /etc/php/7.1/apache2/conf.d/timezone.ini && \
-  echo "date.timezone = \"$TZ\";" > /etc/php/7.1/cli/conf.d/timezone.ini
+  echo "date.timezone = \"$TZ\";" > /etc/php/7.3/apache2/conf.d/timezone.ini && \
+  echo "date.timezone = \"$TZ\";" > /etc/php/7.3/cli/conf.d/timezone.ini
 
 # Install manually xhprof
 RUN \
@@ -96,19 +97,19 @@ RUN \
   wget https://github.com/Yaoguais/phpng-xhprof/archive/master.zip && \
   unzip master.zip && \
   cd phpng-xhprof-master && \
-  phpize7.1 && \
-  ./configure --with-php-config=/usr/bin/php-config7.1 && \
+  phpize7.3 && \
+  ./configure --with-php-config=/usr/bin/php-config7.3 && \
   make && make install && \
-  mv /usr/lib/php/20160303/phpng_xhprof.so /usr/lib/php/20160303/xhprof.so  && \
-  echo "extension=xhprof.so" > /etc/php/7.1/mods-available/xhprof.ini && \
-  echo "xhprof.output_dir=/var/www/xhprof" >> /etc/php/7.1/mods-available/xhprof.ini
+#  mv /usr/lib/php/20170718/phpng_xhprof.so /usr/lib/php/20170718/xhprof.so  && \
+  echo "extension=xhprof.so" > /etc/php/7.3/mods-available/xhprof.ini && \
+  echo "xhprof.output_dir=/var/www/xhprof" >> /etc/php/7.3/mods-available/xhprof.ini
 
 # Install SMTP.
 RUN apt-get install -y ssmtp && \
   echo "FromLineOverride=YES" >> /etc/ssmtp/ssmtp.conf
 
 # Install Apache web server.
-RUN apt-get -yqq install apache2-mpm-prefork
+RUN apt-get -yqq install apache2
 
 #
 # Step 2: Configuration
@@ -140,7 +141,7 @@ RUN a2enmod		\
   headers		\
   mime 			\
   negotiation 		\
-  php7.1 		\
+  php7.3 		\
   mpm_prefork 		\
   reqtimeout 		\
   rewrite 		\
@@ -170,6 +171,11 @@ RUN composer global require "hirak/prestissimo:^0.3"
   # chmod +x /usr/local/bin/drush && \
   # Copy configuration files to user home directory:
   # drush init -y
+
+# RUN composer global require drush/drush && \
+#  ln -s /root/.composer/vendor/bin/drush /usr/local/bin && \
+#  drush init -y
+
 
 ### Install DRUPAL CONSOLE (latest version) ###
 # Run this in your terminal to get the latest project version:

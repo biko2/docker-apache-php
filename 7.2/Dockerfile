@@ -172,20 +172,20 @@ RUN composer global require "hirak/prestissimo:^0.3"
   # Copy configuration files to user home directory:
   # drush init -y
 
-RUN composer global require drush/drush && \
-  ln -s /root/.composer/vendor/bin/drush /usr/local/bin && \
-  drush init -y
+# RUN composer global require drush/drush && \
+#  ln -s /root/.composer/vendor/bin/drush /usr/local/bin && \
+#  drush init -y
 
 
 ### Install DRUPAL CONSOLE (latest version) ###
 # Run this in your terminal to get the latest project version:
-RUN curl https://drupalconsole.com/installer -L -o drupal.phar && \
+# RUN curl https://drupalconsole.com/installer -L -o drupal.phar && \
   # Accessing from anywhere on your system:
-  mv drupal.phar /usr/local/bin/drupal && \
+  # mv drupal.phar /usr/local/bin/drupal && \
   # Apply executable permissions on the downloaded file:
-  chmod +x /usr/local/bin/drupal && \
+  # chmod +x /usr/local/bin/drupal && \
   # Copy configuration files to user home directory:
-  drupal init --override
+  # drupal init --override
 
 # Bash setup.
 RUN echo ". /usr/share/bash-completion/bash_completion" >> ~/.bashrc && echo "alias ll='ls -lahs'" >> ~/.bashrc
@@ -204,6 +204,9 @@ RUN apt-get -q autoclean && \
 
 # Create 'me' user like local machime user.
 RUN useradd me && usermod -G www-data -a me
+
+# Add www-data to adm group
+RUN usermod -a -G adm www-data
 
 # Working dir
 WORKDIR /var/www
