@@ -161,25 +161,10 @@ RUN echo 'function composer() { COMPOSER="$(which composer)" || { echo "Could no
 # prestissimo to speed up composer
 RUN composer global require "hirak/prestissimo:^0.3"
 
-### Install DRUSH (latest stable) ###
-# Run this in your terminal to get the latest DRUSH project version:
-# RUN curl http://files.drush.org/drush.phar -L -o drush.phar && \
-  # Accessing from anywhere on your system:
-  # mv drush.phar /usr/local/bin/drush && \
-  # Apply executable permissions on the downloaded file:
-  # chmod +x /usr/local/bin/drush && \
-  # Copy configuration files to user home directory:
-  # drush init -y
-
-### Install DRUPAL CONSOLE (latest version) ###
-# Run this in your terminal to get the latest project version:
-# RUN curl https://drupalconsole.com/installer -L -o drupal.phar && \
-  # Accessing from anywhere on your system:
-  # mv drupal.phar /usr/local/bin/drupal && \
-  # Apply executable permissions on the downloaded file:
-  # chmod +x /usr/local/bin/drupal && \
-  # Copy configuration files to user home directory:
-  # drupal init --override
+# Install drush launcher
+RUN wget -O drush.phar https://github.com/drush-ops/drush-launcher/releases/download/0.6.0/drush.phar
+RUN chmod +x drush.phar
+RUN mv drush.phar /usr/local/bin/drush
 
 # Bash setup.
 RUN echo ". /usr/share/bash-completion/bash_completion" >> ~/.bashrc && echo "alias ll='ls -lahs'" >> ~/.bashrc
